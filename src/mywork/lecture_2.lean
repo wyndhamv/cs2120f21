@@ -1,4 +1,11 @@
 /-
+In this file, we give formal statements (our version)
+of the two axioms of equality. We also present Lean's
+versions of these rules, and show how you can use them
+without giving all of the arguments explicitly.
+-/
+
+/-
 INFERENCE RULE #1/2: EQUALITY IS REFLEXIVE
 
 Everything is equal to itself. A bit more formally,
@@ -10,14 +17,6 @@ axiom eq_refl  :
   ∀ (T : Type)  -- if T is any type (of thing)
     (t : T),    -- and t is thing of that type, T
   t = t         -- the result type: proof of t = t
-
-/-
-Ok, you actually have to *apply* the axiom of reflexive equality. 
--/
-
-example : 1 = 1 := eq_refl ℕ 1  -- Our definition
-example : 1 = 1 := @eq.refl ℕ 1 -- Lean, with inference turned off by @
-example : 1 = 1 := eq.refl 1    -- Lean's definition  with T=ℕ inferred
 
 /-
 INFERENCE RULE #2/2: SUBSTITUTION OF EQUALS FOR EQUALS
@@ -35,6 +34,7 @@ axiom eq_subst :
     (px : P x),     -- and you have a proof that x has property P
   P y               -- then you can deduce (and get a proof) of P y
 
+<<<<<<< HEAD:src/mywork/lecture_2.lean
 -- EXAMPLES
 
 -- a proposition and a predicate
@@ -163,3 +163,11 @@ begin
 end
 
 
+=======
+/-
+The Lean versions of these axioms are called eq.refl and eq.subst.
+They're defined in ways that allow (and require) one not to give the
+T, P, x, or y parameters explicitly when applying eq_subst. More
+details come later.
+-/
+>>>>>>> cf5f53e674a73ad83dcd8853ba39d2c75609e4e4:src/instructor/lectures/lecture_2.lean

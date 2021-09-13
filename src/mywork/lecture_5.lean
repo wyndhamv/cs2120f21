@@ -41,7 +41,7 @@ For P → Q (if P is true then Q must also be true)
 kind of function, to any proof of P to derive a proof of Q!
 -/
 
-def foo : ∀ (x : ℕ), x = 0 → x + 1 = 1 := 
+lemma foo : ∀ (x : ℕ), x = 0 → x + 1 = 1 := 
 begin
   assume x h,
   rw h,
@@ -57,5 +57,14 @@ be applied to a specific value to derive a proof *for that
 specific value. Indeed, in Lean, → is really just another
 notation for forall!
 -/
+
+example: 0 = 0 ∧ 1 = 1 :=
+begin
+  
+  apply and.intro _ _,
+  apply eq.refl 0,
+  apply eq.refl 1,
+  
+end
 
 def 
