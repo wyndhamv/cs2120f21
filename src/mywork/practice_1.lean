@@ -13,7 +13,7 @@ this question that makes it much easier to answer than it might
 at first appear.
 
 Answer: We have a proof that w = z. By the proof that equality is symmetric,
-w = z can be rewritten as z = w, which is the goal of the proof. QED.
+w = z can be rewritten as z = w. QED.
 -/
 
 /- #2
@@ -107,10 +107,11 @@ by filling in the hole
 
 axioms (raining streets_wet : Prop)
 
-axiom if_raining_then_streets_wet : 
-  its_raining → 
-  the_streets_are_wet
-  
+def if_raining_then_streets_wet : Prop :=
+  raining → 
+  streets_wet
+
+
 
 /- #9
 Now suppose that in addition, its_raining is true, and
@@ -123,11 +124,16 @@ you are asked to use the elimination rule for →.
 axiom pf_raining : raining
 
 example : streets_wet :=
- _
+  
+ begin   
+   apply pf_its_raining
+ end
+
 
 /- 
 AND: ∧
 -/
+
 
 /- #10
 In our last class, we proved that "∧ is *commutative*."
@@ -170,7 +176,7 @@ theorem and_associative :
 begin
   intros P Q R h,
   have p : P := and.elim_left h,
-  have p1 : P := and.elim_right h,
+  have p1 : P := and.elim h,
   apply and.intro _ _,
 end
 
