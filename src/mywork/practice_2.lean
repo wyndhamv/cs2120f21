@@ -35,7 +35,7 @@ end
 
 example : ∀ (P : Prop), P ∧ P ↔ P := 
 begin
-  
+
   assume P,
   apply iff.intro _ _,
   --forwards
@@ -49,11 +49,27 @@ end
 
 example : ∀ (P Q : Prop), P ∨ Q ↔ Q ∨ P := 
 begin
+
   assume P Q,
   apply iff.intro _ _,
   --forwards
-
+    assume paq,
+    apply or.elim paq,
+      --or case 1
+      assume p,
+      apply or.intro_right Q p,
+      --or case 2
+      assume q,
+      apply or.intro_left P q,
   --backwards
+    assume qop,
+    apply or.elim qop,
+      --or case 1
+        assume q,
+        apply or.intro_right P q,
+      --or case 2
+        assume p,
+        apply or.intro_left Q p,
 
 end
 
@@ -62,7 +78,8 @@ begin
     assume P Q,
     apply iff.intro _ _,
     --forwards
-
+      assume paq,
+      apply and.intro _ _,
     --backwards
 
 end
