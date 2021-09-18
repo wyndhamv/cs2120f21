@@ -80,12 +80,33 @@ begin
     --forwards
       assume paq,
       apply and.intro _ _,
+      apply and.elim_right paq,
+      apply and.elim_left paq,
     --backwards
+      assume qap,
+      apply and.intro _ _,
+      apply and.elim_right qap,
+      apply and.elim_left qap,
 
 end
 
 example : ∀ (P Q R : Prop), P ∧ (Q ∨ R) ↔ (P ∧ Q) ∨ (P ∧ R) := 
 begin
+  assume P Q R,
+  apply iff.intro _ _,
+    --forwards
+     assume paqor,
+     have p : P := and.elim_left paqor,
+     have qor : Q ∨ R := and.elim_right paqor,
+     apply or.elim qor,
+
+     assume q,
+     have paq : P ∧ Q := and.intro p q,
+     
+     --apply or.intro_left paq (P ∧ R),
+     
+    --backwards
+
 end
 
 example : ∀ (P Q R : Prop), P ∨ (Q ∧ R) ↔ (P ∨ Q) ∧ (P ∨ R) := 
