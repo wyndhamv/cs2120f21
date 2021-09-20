@@ -100,41 +100,145 @@ begin
      have qor : Q ∨ R := and.elim_right paqor,
      apply or.elim qor,
 
-     assume q,
-     have paq : P ∧ Q := and.intro p q,
+      --q case
+        assume q,
+        have paq : P ∧ Q := and.intro p q,
+        apply or.intro_left,
+        exact paq, 
      
-     --apply or.intro_left paq (P ∧ R),
+      --r case
+        assume r,
+        have par : P ∧ R := and.intro p r,
+        apply or.intro_right,
+        exact par,
+
      
     --backwards
+      assume paqopar,
+      apply or.elim paqopar,
+
+        --paq
+          assume paq,
+          apply and.intro _,
+          have q : Q := and.elim_right paq,
+          apply or.intro_left R q,
+
+          have p : P := and.elim_left paq,
+          exact p,
+
+        --par
+          assume par,
+          have p : P := and.elim_left par,
+          have r : R := and.elim_right par,
+          apply and.intro,
+          exact p,
+          apply or.intro_right Q r,
 
 end
 
+--not done
 example : ∀ (P Q R : Prop), P ∨ (Q ∧ R) ↔ (P ∨ Q) ∧ (P ∨ R) := 
 begin
+  assume P Q R,
+  apply iff.intro _ _,
+
+    --forwards
+      assume poqar,
+      apply and.intro,
+      have p
+      
+      --apply and.intro _,
+
+
+    --backwards
 end
 
 example : ∀ (P Q : Prop), P ∧ (P ∨ Q) ↔ P := 
 begin
+  assume P Q,
+  apply iff.intro _ _,
+
+  --f
+    assume papoq,
+    have p : P := and.elim_left papoq,
+    exact p,
+
+  --b
+    assume p,
+    apply and.intro _,
+    apply or.intro_left Q p,
+    exact p,
+
 end
 
 example : ∀ (P Q : Prop), P ∨ (P ∧ Q) ↔ P := 
 begin
+  assume P Q,
+  apply iff.intro _ _,
+    --f
+      assume popaq,
+      apply or.elim popaq,
+        assume p,
+        exact p,
+
+        assume paq,
+        have p : P := and.elim_left paq,
+        exact p,
+    --b
+      assume p,
+      apply or.intro_left _ _,
+      exact p,
 end
 
 example : ∀ (P : Prop), P ∨ true ↔ true := 
 begin
+  assume P,
+  apply iff.intro _ _,
+
+  assume pot,
+  exact true.intro,
+
+  assume t,
+  apply or.intro_right P t,
 end
 
+--Not done!!
 example : ∀ (P : Prop), P ∨ false ↔ P := 
 begin
+  assume P,
+  apply iff.intro,
+
+  assume pof,
+  apply or.elim pof,
+  assume p,
+  exact p,
+
+  assume f,
 end
 
 example : ∀ (P : Prop), P ∧ true ↔ P := 
 begin
+    assume P,
+    apply iff.intro,
+
+    assume pat,
+    apply and.elim_left pat,
+
+    assume p,
+    apply and.intro,
+    exact p,
+    exact true.intro,
 end
 
+--not done
 example : ∀ (P : Prop), P ∧ false ↔ false := 
 begin
+  assume P,
+  apply iff.intro,
+  
+  assume paf,
+  have f : false := and.elim_right paf,
+  exact f,
 end
 
 
