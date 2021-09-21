@@ -1,4 +1,10 @@
 /-
+Wyndham White (working alone)
+wrw2ztk
+https://github.com/wyndhamv/cs2120f21.git
+-/
+
+/-
 Prove the following simple logical conjectures.
 Give a formal and an English proof of each one.
 Your English language proofs should be complete
@@ -136,7 +142,6 @@ begin
 
 end
 
---not done
 example : ∀ (P Q R : Prop), P ∨ (Q ∧ R) ↔ (P ∨ Q) ∧ (P ∨ R) := 
 begin
   assume P Q R,
@@ -145,12 +150,44 @@ begin
     --forwards
       assume poqar,
       apply and.intro,
-      have p
-      
-      --apply and.intro _,
-
+      apply or.elim poqar,
+        --p
+          assume p,
+          apply or.intro_left Q p,
+        --qar
+          assume qar,
+          have q : Q := and.elim_left qar,
+          apply or.intro_right P q,
+        --por
+          apply or.elim poqar,
+            --p
+              assume p,
+              apply or.intro_left R p,
+            --qar
+              assume qar,
+              have r : R := and.elim_right qar,
+              apply or.intro_right P r,
 
     --backwards
+      assume poqapor,
+      have poq : (P∨Q) := and.elim_left poqapor,
+      have por : (P∨R) := and.elim_right poqapor,
+      apply or.elim poq,
+        --poq elim
+          --assume p
+            assume p,
+            apply or.intro_left (Q∧R) p,
+          --assume q
+            assume q,
+            apply or.elim por,
+              --assume p
+                assume p,
+                apply or.intro_left (Q∧R) p,
+              --assume r
+                assume r,
+                have qar : (Q∧R) := and.intro q r,
+                apply or.intro_right P qar,
+      
 end
 
 example : ∀ (P Q : Prop), P ∧ (P ∨ Q) ↔ P := 
@@ -202,7 +239,6 @@ begin
   apply or.intro_right P t,
 end
 
---Not done!!
 example : ∀ (P : Prop), P ∨ false ↔ P := 
 begin
   assume P,
@@ -214,6 +250,10 @@ begin
   exact p,
 
   assume f,
+  cases f,
+  
+  assume P,
+  apply or.intro_left false P,
 end
 
 example : ∀ (P : Prop), P ∧ true ↔ P := 
@@ -230,15 +270,17 @@ begin
     exact true.intro,
 end
 
---not done
 example : ∀ (P : Prop), P ∧ false ↔ false := 
 begin
   assume P,
   apply iff.intro,
-  
+
   assume paf,
   have f : false := and.elim_right paf,
   exact f,
+
+  assume f,
+  cases f,
 end
 
 
