@@ -279,7 +279,28 @@ individually. Then, go into case analysis by applying the elimination rule for o
 For the case where P is true, assume a proof of P. Then, use the introduction rule for or
 to prove P ∨ Q using the proof of P. 
 For the case of Q ∧ R, assume a proof of it (qar). Then, construct a proof of Q by applying the
-elimination rule for and to qar. Prove P ∨ Q by applying the introduction rule for or
+elimination rule for ∧ to qar. Construct a proof of P ∨ Q by applying the introduction rule
+for ∨ with the proof of Q and the proposition R.
+For the case of proving P ∨ R, apply the elimination rule for or to poqar to launch into case 
+analysis for proving P ∨ R using poqar.
+In the case where P is true, assume a proof of it. Then, apply the introduction rule for or
+with a proof of P and the proposition R to prove P ∨ R. 
+In the case where Q ∧ R is true, assume a proof of it (qar). Then, construct a proof of R
+using the elimination rule for and on qar. Then, apply the introduction rule for ∨ with a proof 
+of R and the proposition P to prove P ∨ R.
+
+Now, we must prove that (P ∨ Q) ∧ (P ∨ R) implies P ∨ (Q ∧ R). Assume a proof of (P ∨ Q) ∧ (P ∨ R) (poqapor).
+Using the elimination rule for and on poqapor, construct a proof of P ∨ Q and a proof of P ∨ R. 
+Then, split into case analysis by applying the elimination rule for or on the proof of P ∨ Q. 
+In the case of P being true, assume a proof of P. Then, apply the introduction rule for or with the proof of p
+and proposition (Q∧R) to prove P ∨ (Q ∧ R). 
+In the case of Q being true, assume a proof of Q. Then, split into case analysis of P ∨ R. 
+When P is true, assume a proof of it. Then, prove P ∨ (Q ∧ R) by applying the introduction rule
+for or with the proof of P and the proposition (Q∧R). 
+When R is true, assume a proof of it. Then, construct a proof of Q ∧ R by applying the introduction rule
+for and with the proof of Q and the proof of R. Then, apply the introduction rule for ∨ with the proposition P and proof 
+of (Q ∧ R) to prove P ∨ (Q ∧ R). 
+QED
 -/
 
 example : ∀ (P Q : Prop), P ∧ (P ∨ Q) ↔ P := 
