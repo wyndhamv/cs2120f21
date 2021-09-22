@@ -439,6 +439,7 @@ Then, we must prove that P implies P ∧ true. Assume a proof of P, then split p
 into proving P and proving true individually. Apply the proof of P to prove P, then apply true.intro to
 prove true.
 QED.
+
 -/
 
 
@@ -465,5 +466,4 @@ Then, we must prove that false inplies P ∧ false. We can show that this is not
 case analysis.
 QED.
 -/
-
 
