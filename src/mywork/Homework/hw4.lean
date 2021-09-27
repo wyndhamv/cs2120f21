@@ -334,13 +334,12 @@ end
 Formally state and prove the proposition that
 not every natural number is equal to zero.
 -/
+
 lemma not_all_nats_are_zero : ∃ (n : ℕ), n ≠ 0 :=
 begin
-  apply exists.intro,
-  assume h,
-  have := 3,
-  have f := h y,
-
+  apply exists.intro 4 _,
+  assume fez,
+  cases fez,
 end 
 
 #check ℕ

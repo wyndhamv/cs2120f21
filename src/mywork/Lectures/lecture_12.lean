@@ -18,7 +18,9 @@ example : exists n, ev n := _
 
 
 example : exists (a b c : ℕ), a*a + b*c = c*c := 
-_
+begin
+  
+end
 
 
 example : ∀ (n : ℕ), ∃ (m : ℕ), n = 2 * m :=
