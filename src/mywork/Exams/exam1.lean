@@ -76,7 +76,7 @@ Give a brief English language explanation of
 the introduction rule for true.
 
 -- There is always a proof of true. So, any time true needs to be proved
--- it always can by applying the proof of true.
+-- it always can be by applying the proof of true.
 
 ELIMINATION
 
@@ -182,8 +182,20 @@ briefly explain in English how you *use* pf to derive a
 proof of Q.
 
 -- answer here
-NOT DONE THIS YET
+You have the proof that any t of type T implies Q. So, when given 
+a t of type T, a proof of Q can be created by applying the proof that t implies Q
+to t. QED.
 -/
+
+--Fleshing out this example to prove my answer to myself
+namespace hidden
+example : ∀ (T : Type) (Q : Prop) (pf : ∀ (t:T), Q) (t:T), Q :=
+  begin
+    assume T Q,
+    assume tiq,
+    exact tiq,
+  end
+end namespace
 
 /-
 Consider the following assumptions, and then in the
@@ -200,7 +212,7 @@ axioms
   -- (1) Lynn is a person
   -- (2) Lynn knows logic
   -- (Lynn : Person)
-  -- (lkl : L)
+  -- (lkl : KnowsLogic)
 
 /-
 Now, formally state and prove the proposition that
