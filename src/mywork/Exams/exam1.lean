@@ -1,3 +1,8 @@
+/-
+Wyndham White
+wrw2ztk
+-/
+
 /- 
    *******************************
    PART 1 of 2: AXIOMS [50 points]
@@ -195,7 +200,7 @@ example : ∀ (T : Type) (Q : Prop) (pf : ∀ (t:T), Q) (t:T), Q :=
     assume tiq,
     exact tiq,
   end
-end namespace
+end hidden
 
 /-
 Consider the following assumptions, and then in the
@@ -211,16 +216,28 @@ axioms
   -- formalizee the following assumptions here
   -- (1) Lynn is a person
   -- (2) Lynn knows logic
-  -- (Lynn : Person)
-  -- (lkl : KnowsLogic)
+  (Lynn : Person)
+  (lkl : KnowsLogic Lynn)
 
 /-
 Now, formally state and prove the proposition that
 Lynn is a better computer scientist
 -/
-example : _ := _
-
---NOT DONE
+example : ∀ (Person : Type) (Lynn : Person)
+  (KnowsLogic BetterComputerScientist : Person → Prop)
+  (LogicMakesYouBetterAtCS: 
+    ∀ (p : Person), KnowsLogic p → BetterComputerScientist p),
+    KnowsLogic Lynn → BetterComputerScientist Lynn
+     := 
+begin
+  assume person,
+  assume Lynn,
+  intros KnowsLogic BetterComputerScientist,
+  intros lmybacs,
+  assume LynnKL,
+  apply lmybacs,
+  exact LynnKL,
+end
 
 -- -------------------------------------
 
@@ -261,12 +278,11 @@ Then you apply the rule of negation ¬¬P → P
 to that result to arrive a a proof of P. We have
 seen that the inference rule you apply in the 
 last step is not constructively valid but that it
-is __________ valid, and that accepting the axiom
+is classically valid, and that accepting the axiom
 of the excluded middle suffices to establish negation
-elimination (better called double _____ _________)
+elimination (better called double negation elimination)
 as a theorem.
 
-NOT DONE
 -/
 
 
@@ -350,13 +366,9 @@ def ELJL : Prop :=
     (∀ (p : Person), Likes p JohnLennon) 
     
 /-
-A person is a type. Nice is a predicate that makes the proposition that a given person is nice.
-Talented is a predicate that makes the proposition that a given person is talented. 
-Likes is a predicate that given two people, makes the proposition that the first person likes
-the second. elantp is a proof that for all people, given that a person is nice and talented,
-everyone likes that person. John Lennon is a person, and John Lennon is nice and talented. 
-Everyone likes John Lennon.
-LOOK BACK AT THIS EXPLANATION
+A person can be nice and a person can be talented. A person can like a person or not like that person.
+If a person is nice and talented, then all people like that person. John Lennon is a Person.
+John Lennon is nice and talented. Everyone likes John Lennon.
 -/
 example : ELJL :=
 begin
@@ -413,7 +425,7 @@ def eq_is_symmetric : Prop :=
   ∀ (T : Type) (x y : T), x = y → y = x
 
 def eq_is_transitive : Prop :=
-  ∀ (T : Type) (x y z : T), x = y → y = z → x = z
+  ∀ (T : Type) (x y z : T) (xey : x = y) (yez : y = z), x = z
 
 
 /-
@@ -441,8 +453,15 @@ begin
   assume nnp,
   have pornp := classical.em P,
   exact pornp,
+
   assume pornp,
-  cases pornp,
+  apply or.elim pornp,
+  assume p,
+  trivial,
+
+  assume np,
+  have p : P := _,
+  trivial,
 end
 
 
@@ -455,4 +474,11 @@ thre is someone who loves everyone. [5 points]
 
 axiom Loves : Person → Person → Prop
 
-example : ∀ (p1 p2 : Person), (pf : Loves p1 p2 ↔ Loves p2 p1) := _
+example : ∀ (someone everyone : Person), Loves everyone someone → (Loves everyone someone ↔ Loves someone everyone) → Loves someone everyone :=
+  begin
+    assume s e,
+    assume eLs,
+    assume symm,
+    have h : Loves e s → Loves s e := iff.elim_left symm,
+    apply h eLs,
+  end
